@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pi4j</groupId>
-    <artifactId>pi4j-minimal-example</artifactId>
+    <artifactId>pi4j-example-minimal</artifactId>
     <name>Pi4J :: MINIMAL EXAMPLE :: Sample minimal project</name>
     <description>Pi4J Sample Code</description>
     <version>0.0.1</version>
