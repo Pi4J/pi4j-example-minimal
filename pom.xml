@@ -12,18 +12,52 @@
 
     <!-- BUILD PROPERTIES -->
     <properties>
+        <!-- PROJECT ENCODING PROPERTIES -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- JAVA COMPILER VERSIONS -->
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
         <!-- DEPENDENCIES VERSIONS -->
         <slf4j.version>2.0.0-alpha0</slf4j.version>
         <pi4j.version>2.0-SNAPSHOT</pi4j.version>
 
+        <!-- BUILD PLUGIN VERSIONS -->
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+
         <!-- SETTINGS FOR COPYING Pi4J ARTIFACTS TO DEVELOPMENT DEVICE/PLATFORM -->
-        <pi4j.dev.transfer>false</pi4j.dev.transfer>
+        <!--
+        The goal of these settings is to develop on your PC and automatically upload
+        any new build you make in your IDE to your Raspberry Pi. These are default values which
+        you will need to adjust to match your setup. If you don't want to add them here as they
+        contain sensitive info, you can add them in a settings.xml file inside the .m2 directory
+        in your home
+        -->
+        <pi4j.dev.transfer>true</pi4j.dev.transfer>
         <pi4j.dev.host>192.168.1.1</pi4j.dev.host>
         <pi4j.dev.port>22</pi4j.dev.port>
         <pi4j.dev.user>pi</pi4j.dev.user>
         <pi4j.dev.password>raspberry</pi4j.dev.password>
         <pi4j.dev.directory>pi4j-temp</pi4j.dev.directory>
     </properties>
+
+    <!-- DEPENDENCY REPOSITORIES -->
+    <repositories>
+        <repository>
+            <id>oss-snapshots-repo</id>
+            <name>Sonatype OSS Maven Repository</name>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -68,12 +102,6 @@
                     <include>README.md</include>
                 </includes>
             </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/**</include>
-                </includes>
-            </resource>
         </resources>
 
         <plugins>
@@ -81,27 +109,69 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-
-            <!-- MAVEN RUN JUNIT5 TESTS -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-
-            <!-- INCLUDE SOURCE JAR -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-
-            <!-- INCLUDE JAVADOC JAR -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <skip>true</skip> <!-- NO NEED TO JAVADOC EXAMPLE CODE -->
+                    <release>${java.version}</release>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <verbose>false</verbose>
                 </configuration>
+            </plugin>
+
+            <!-- DEFAULT JAR EXECUTABLE CLASS -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>--module-path</argument>
+                        <modulepath/>
+                        <argument>--module</argument>
+                        <argument>com.pi4j.example/com.pi4j.example.MinimalExample</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+            <!-- BUILD THE FINAL JAR FILE IN THE /target/distribution PATH -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/distribution</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- COPY ANY RUNTIME SCRIPTS TO THE /target/distribution PATH  -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy todir="${project.build.directory}/distribution" overwrite="true" flatten="true">
+                                    <fileset dir="assets" includes="*.sh" ></fileset>
+                                </copy>
+                                <chmod dir="${project.build.directory}/distribution" perm="ugo+rx" includes="**/*.sh"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- DOWNLOAD RUNTIME DEPENDENCIES -->
@@ -116,63 +186,16 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
-                            <excludeGroupIds>com.pi4j</excludeGroupIds>
+                            <outputDirectory>${project.build.directory}/distribution</outputDirectory>
                             <includeScope>runtime</includeScope>
-                            <excludeTransitive>true</excludeTransitive>
+                            <excludeTransitive>false</excludeTransitive>
                             <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteSnapshots>true</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- OPTIONALLY DEPLOY THE FINAL JAR TO THE RASPBERRY PI -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-
-                    <!-- copy the compiled JAR file to the Raspberry Pi platform platform -->
-                    <execution>
-                        <id>transfer-compiled-pi4j-jar</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-                                    classpathref="maven.plugin.classpath"/>
-                                <if>
-                                    <equals arg1="${pi4j.dev.transfer}" arg2="true"/>
-                                    <then>
-                                        <!-- ensure the target directory exists on the Raspberry Pi -->
-                                        <sshexec host="${pi4j.dev.host}" port="${pi4j.dev.port}"
-                                            username="${pi4j.dev.user}"
-                                            password="${pi4j.dev.password}" trust="true" failonerror="false"
-                                            verbose="false" command="mkdir --parents ${pi4j.dev.directory}"/>
-
-                                        <!-- copy the JAR file(s) to the Raspberry Pi -->
-                                        <scp
-                                            todir="${pi4j.dev.user}:${pi4j.dev.password}@${pi4j.dev.host}:${pi4j.dev.directory}"
-                                            port="${pi4j.dev.port}" trust="true" verbose="false" failonerror="true">
-                                            <fileset dir="${project.build.directory}">
-                                                <include name="${project.build.finalName}.jar"/>
-                                            </fileset>
-                                            <fileset dir="${project.build.directory}/dependencies">
-                                                <include name="*.jar"/>
-                                            </fileset>
-                                        </scp>
-                                    </then>
-                                </if>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 </project>
