@@ -48,8 +48,8 @@ public class MinimalExample {
     private static int pressCount = 0;
 
     /**
-     * This application blinks a led and counts the number the button is pressed.
-     * The blink speed increases with each button press, and after 5 presses the application finishes.
+     * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
+     * button press, and after 5 presses the application finishes.
      *
      * @param args an array of {@link java.lang.String} objects.
      * @throws java.lang.Exception if any.
@@ -125,6 +125,7 @@ public class MinimalExample {
         button.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
                 pressCount++;
+                console.println("Button was pressed for the " + pressCount + "th time");
             }
         });
 
