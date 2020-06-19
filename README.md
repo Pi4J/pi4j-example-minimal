@@ -7,8 +7,6 @@
 This project contains a minimal example application which uses the Pi4J (V2) library and uses a digital output (LED) 
 and digital input (push button). Full description is available on [the Pi4J website](https://v2.pi4j.com/getting-started/minimal-example-application)
 
-Copyright (C) 2012-2020 Pi4J
-
 ## PROJECT OVERVIEW
 
 The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
