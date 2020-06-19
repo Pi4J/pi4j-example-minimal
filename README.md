@@ -5,23 +5,7 @@
 [![Build Status](https://travis-ci.org/Pi4J/pi4j-minimal-example.svg?branch=master)](https://travis-ci.org/Pi4J/pi4j-minimal-example?branch=master) 
 
 This project contains a minimal example application which uses the Pi4J (V2) library and uses a digital output (LED) 
-and digital input (push button).
-
----
-
-## DISCLAIMER:: EXPERIMENTAL VERSION
-
-### This repository is an experimental and incomplete work-in-progress for the next major version of Pi4J.
-
-### !! NOT READY FOR PRODUCTION USE !!
-
----
-
-## PROJECT INFORMATION
-
-Project website: https://pi4j.com/ <br />
-Pi4J Community Forum (*new*): https://forum.pi4j.com/ <br />
-Version 2.0 Project Discussions (*new*): https://forum.pi4j.com/category/6/version-2-0 <br />
+and digital input (push button). Full description is available on [the Pi4J website](https://v2.pi4j.com/getting-started/minimal-example-application)
 
 Copyright (C) 2012-2020 Pi4J
 
@@ -29,9 +13,13 @@ Copyright (C) 2012-2020 Pi4J
 
 The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
 
+## WIRING
+
+The application needs a LED connected on BCM 22 and button on BCM 24. 
+
 ## RUNTIME DEPENDENCIES
 
-This project used Pi4J V.2 which has the following runtime dependency requirements:
+This project uses Pi4J V.2 which has the following runtime dependency requirements:
 - [**SLF4J (API)**](https://www.slf4j.org/)
 - [**SLF4J-SIMPLE**](https://www.slf4j.org/)
 - [**PIGPIO Library**](http://abyz.me.uk/rpi/pigpio) (for the Raspberry Pi) - This 
@@ -45,10 +33,10 @@ This project is build using [Apache Maven](https://maven.apache.org/) 3.6
 (or later) and Java 11 OpenJDK (or later).  These prerequisites must be installed 
 prior to building this project.  The following command can be used to download 
 all project dependencies and compile the Java module.  You can build this 
-project on you workstation or directly on a Raspberry Pi.  
+project directly on a Raspberry Pi with Java 11+.  
 
 ```text
-mvn clean install
+mvn clean package
 ```
 
 Once the build is complete and was successful, you can find the compiled 
@@ -65,10 +53,6 @@ Make the run script executable and start it like this:
 chmod +x run.sh
 sudo ./run.sh
 ```
-
-## IN DEVELOPMENT
-
-* 2020-06-11 :: Start of this project
 
 ## LICENSE
 
