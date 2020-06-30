@@ -2,7 +2,7 @@
  Pi4J V2 :: Java I/O Library for Raspberry Pi :: Minimal example application
 ==========================================================================
 
-[![Build Status](https://travis-ci.org/Pi4J/pi4j-minimal-example.svg?branch=master)](https://travis-ci.org/Pi4J/pi4j-minimal-example?branch=master) 
+[![Build Status](https://travis-ci.org/Pi4J/pi4j-example-minimal.svg?branch=master)](https://travis-ci.org/Pi4J/pi4j-example-minimal?branch=master) 
 
 This project contains a minimal example application which uses the Pi4J (V2) library and uses a digital output (LED) 
 and digital input (push button). Full description is available on [the Pi4J website](https://v2.pi4j.com/getting-started/minimal-example-application)
