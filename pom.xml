@@ -27,22 +27,6 @@
         <!-- BUILD PLUGIN VERSIONS -->
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-
-        <!-- SETTINGS FOR COPYING Pi4J ARTIFACTS TO DEVELOPMENT DEVICE/PLATFORM -->
-        <!--
-        The goal of these settings is to develop on your PC and automatically upload
-        any new build you make in your IDE to your Raspberry Pi. These are default values which
-        you will need to adjust to match your setup. If you don't want to add them here as they
-        contain sensitive info, you can add them in a settings.xml file inside the .m2 directory
-        in your home
-        -->
-        <pi4j.dev.transfer>true</pi4j.dev.transfer>
-        <pi4j.dev.host>192.168.1.1</pi4j.dev.host>
-        <pi4j.dev.port>22</pi4j.dev.port>
-        <pi4j.dev.user>pi</pi4j.dev.user>
-        <pi4j.dev.password>raspberry</pi4j.dev.password>
-        <pi4j.dev.directory>pi4j-temp</pi4j.dev.directory>
     </properties>
 
     <!-- DEPENDENCY REPOSITORIES -->
@@ -93,18 +77,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>${project.build.directory}</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>LICENSE.txt</include>
-                    <include>NOTICE.txt</include>
-                    <include>README.md</include>
-                </includes>
-            </resource>
-        </resources>
-
         <plugins>
             <!-- JAVA COMPILER -->
             <plugin>
@@ -193,44 +165,6 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- OPTIONALLY DEPLOY THE FINAL JAR TO THE RASPBERRY PI -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven-antrun-plugin.version}</version>
-                <executions>
-                    <!-- Copy the compiled JAR files to the Raspberry Pi -->
-                    <execution>
-                        <id>transfer-compiled-pi4j-jar</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-                                    classpathref="maven.plugin.classpath" />
-                                <if>
-                                    <equals arg1="${pi4j.dev.transfer}" arg2="true" />
-                                    <then>
-                                        <!-- ensure the target directory exists on the Raspberry Pi -->
-                                        <sshexec host="${pi4j.dev.host}" port="${pi4j.dev.port}" username="${pi4j.dev.user}"
-                                            password="${pi4j.dev.password}" trust="true" failonerror="false"
-                                            verbose="false" command="mkdir --parents ${pi4j.dev.directory}" />
-
-                                        <!-- copy the JAR file to the Raspberry Pi -->
-                                        <scp file="${project.build.directory}/distributions/*"
-                                            todir="${pi4j.dev.user}:${pi4j.dev.password}@${pi4j.dev.host}:${pi4j.dev.directory}"
-                                            port="${pi4j.dev.port}" trust="true" verbose="false" failonerror="true">
-                                        </scp>
-                                    </then>
-                                </if>
-                            </target>
                         </configuration>
                     </execution>
                 </executions>
