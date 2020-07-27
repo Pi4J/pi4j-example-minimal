@@ -9,13 +9,13 @@ and digital input (push button). Full description is available on [the Pi4J webs
 
 ## PROJECT OVERVIEW
 
-The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi using a button and LED.
-
-![Breadboard schematics used in this example](assets/led-button_bb.png)
+The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
 
 ## WIRING
 
 The application needs a LED connected on BCM 22 and button on BCM 24. 
+
+![Breadboard schematics used in this example](assets/led-button_bb.png)
 
 ## RUNTIME DEPENDENCIES
 
