@@ -9,7 +9,9 @@ and digital input (push button). Full description is available on [the Pi4J webs
 
 ## PROJECT OVERVIEW
 
-The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
+The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi using a button and LED.
+
+![Breadboard schematics used in this example](assets/led-button_bb.png)
 
 ## WIRING
 
