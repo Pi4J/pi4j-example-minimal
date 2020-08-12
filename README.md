@@ -9,7 +9,7 @@ and digital input (push button). Full description is available on [the Pi4J webs
 
 ## PROJECT OVERVIEW
 
-The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
+The goal of the example project is to show how to set up a Pi4J Maven / Gradle project for the Raspberry Pi.
 
 ## WIRING
 
@@ -29,15 +29,41 @@ download and install it yourself using the instructions found
 
 ## BUILD DEPENDENCIES & INSTRUCTIONS
 
-This project is build using [Apache Maven](https://maven.apache.org/) 3.6 
-(or later) and Java 11 OpenJDK (or later).  These prerequisites must be installed 
+### Maven
+
+This project can be built with [Apache Maven](https://maven.apache.org/) 3.6 
+(or later) and Java 11 OpenJDK (or later). These prerequisites must be installed 
 prior to building this project.  The following command can be used to download 
 all project dependencies and compile the Java module.  You can build this 
 project directly on a Raspberry Pi with Java 11+.  
 
-```text
+```
 mvn clean package
 ```
+
+### Gradle
+
+You can also use the [Gradle Build Tool](https://gradle.org/) from these same sources. Use version 6.6 (or later) 
+and Java 11 OpenJDK (or later).
+
+On Linux:
+
+```
+sdk install gradle
+gradle -v
+------------------
+Gradle 6.6
+------------------
+./gradlew buiild
+```
+
+On Windows:
+
+```
+gradlew.bat buiild
+```
+
+### Compiled application to run on the Raspberry Pi
 
 Once the build is complete and was successful, you can find the compiled 
 artifacts in the `target` folder.  Specifically all dependency modules (JARs)
