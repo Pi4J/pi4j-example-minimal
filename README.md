@@ -54,7 +54,7 @@ gradle -v
 ------------------
 Gradle 6.6
 ------------------
-./gradlew buiild
+./gradlew build
 ```
 
 On Windows:
@@ -71,7 +71,18 @@ and a simple `run.sh` bash script will be located in the `target/distribution`
 folder.  These are all the required files needed to distribute (copy) to your
 Raspberry Pi to run this project.  If you are using the native bindings running 
 locally on the Raspberry Pi, then you make have to run the program using `sudo` 
-to gain the necessary access permissions to the hardware I/O.  
+to gain the necessary access permissions to the hardware I/O. 
+
+This is the list of files created by the build process of this example application:
+
+* pi4j-core
+* pi4j-example-minimal
+* pi4j-library-pigpio
+* pi4j-plugin-pigpio
+* pi4j-plugin-raspberrypi
+* slf4j-api
+* slf4j-simple
+* run.sh --> this is the actual start file which will run pi4j-example-minimal
 
 Make the run script executable and start it like this:
 
