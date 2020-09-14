@@ -43,32 +43,30 @@ mvn clean package
 
 ### Gradle
 
-You can also use the [Gradle Build Tool](https://gradle.org/) from these same sources. Use version 6.6 (or later) 
-and Java 11 OpenJDK (or later).
+You can also use the [Gradle Build Tool](https://gradle.org/) from these same sources. 
+Use version 6.6 (or later) and Java 11 OpenJDK (or later). The Gradle wrapper is used as 
+described on [docs.gradle.org"](https://docs.gradle.org/current/userguide/gradle_wrapper.html).
 
 On Linux:
 
 ```
-sdk install gradle
-gradle -v
-------------------
-Gradle 6.6
-------------------
 ./gradlew build
 ```
 
 On Windows:
 
 ```
-gradlew.bat buiild
+gradlew.bat build
 ```
 
 ### Compiled application to run on the Raspberry Pi
 
 Once the build is complete and was successful, you can find the compiled 
-artifacts in the `target` folder.  Specifically all dependency modules (JARs)
-and a simple `run.sh` bash script will be located in the `target/distribution` 
-folder.  These are all the required files needed to distribute (copy) to your
+artifacts in the `target` (Maven) or `build` (Gradle) folder.  Specifically 
+all dependency modules (JARs) and a simple `run.sh` bash script will be located in the 
+`target/distribution` (Maven) or `build/distribution` (Gradle) folder.  
+
+These are all the required files needed to distribute (copy) to your
 Raspberry Pi to run this project.  If you are using the native bindings running 
 locally on the Raspberry Pi, then you make have to run the program using `sudo` 
 to gain the necessary access permissions to the hardware I/O. 

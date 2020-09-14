@@ -1,40 +1,32 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+}
 
 group = 'com.pi4j'
 version = '0.0.1'
 
 description = """Pi4J :: MINIMAL EXAMPLE :: Sample minimal project"""
-project.buildDir = 'target'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-// Copy the Java modules in the distribution directory
 plugins.withType(JavaPlugin).configureEach {
     java {
         modularity.inferModulePath = true
     }
 }
-task copyDependencies(type: Copy) {
+
+// Copy the Java modules, run script and JAR in the distribution directory
+tasks.register("copyDistribution", Copy) {
     from configurations.default
-    into 'target/distribution'
+    from tasks.named('jar')
+    from layout.projectDirectory.file('assets/run.sh')
+    into layout.buildDirectory.dir('distribution')
 }
-build.finalizedBy copyDependencies
-
-// Copy the generated application JAR in the distribution directory
-task copyJar(type: Copy) {
-    from jar
-    into 'target/distribution'
+tasks.named("build") {
+    dependsOn("copyDistribution")
 }
-build.finalizedBy copyJar
-
-// Copy the run script in the distribution directory
-task copyRun(type: Copy) {
-    from 'assets/run.sh'
-    into 'target/distribution'
-}
-build.finalizedBy copyRun
 
 // Dependencies for this application, until V2 is released, snapshot is required here
 repositories {
