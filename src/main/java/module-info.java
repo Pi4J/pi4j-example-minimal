@@ -25,7 +25,6 @@
  * #L%
  */
 module com.pi4j.example {
-
     // Pi4J MODULES
     requires com.pi4j;
     requires com.pi4j.plugin.pigpio;

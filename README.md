@@ -9,7 +9,7 @@ and digital input (push button). Full description is available on [the Pi4J webs
 
 ## PROJECT OVERVIEW
 
-The goal of the example project is to show how to setup a Pi4J Maven project for the Raspberry Pi.
+The goal of the example project is to show how to set up a Pi4J Maven / Gradle project for the Raspberry Pi.
 
 ## WIRING
 
@@ -29,23 +29,58 @@ download and install it yourself using the instructions found
 
 ## BUILD DEPENDENCIES & INSTRUCTIONS
 
-This project is build using [Apache Maven](https://maven.apache.org/) 3.6 
-(or later) and Java 11 OpenJDK (or later).  These prerequisites must be installed 
+### Maven
+
+This project can be built with [Apache Maven](https://maven.apache.org/) 3.6 
+(or later) and Java 11 OpenJDK (or later). These prerequisites must be installed 
 prior to building this project.  The following command can be used to download 
 all project dependencies and compile the Java module.  You can build this 
 project directly on a Raspberry Pi with Java 11+.  
 
-```text
+```
 mvn clean package
 ```
 
+### Gradle
+
+You can also use the [Gradle Build Tool](https://gradle.org/) from these same sources. 
+Use version 6.6 (or later) and Java 11 OpenJDK (or later). The Gradle wrapper is used as 
+described on [docs.gradle.org"](https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+
+On Linux:
+
+```
+./gradlew build
+```
+
+On Windows:
+
+```
+gradlew.bat build
+```
+
+### Compiled application to run on the Raspberry Pi
+
 Once the build is complete and was successful, you can find the compiled 
-artifacts in the `target` folder.  Specifically all dependency modules (JARs)
-and a simple `run.sh` bash script will be located in the `target/distribution` 
-folder.  These are all the required files needed to distribute (copy) to your
+artifacts in the `target` (Maven) or `build` (Gradle) folder.  Specifically 
+all dependency modules (JARs) and a simple `run.sh` bash script will be located in the 
+`target/distribution` (Maven) or `build/distribution` (Gradle) folder.  
+
+These are all the required files needed to distribute (copy) to your
 Raspberry Pi to run this project.  If you are using the native bindings running 
 locally on the Raspberry Pi, then you make have to run the program using `sudo` 
-to gain the necessary access permissions to the hardware I/O.  
+to gain the necessary access permissions to the hardware I/O. 
+
+This is the list of files created by the build process of this example application:
+
+* pi4j-core
+* pi4j-example-minimal
+* pi4j-library-pigpio
+* pi4j-plugin-pigpio
+* pi4j-plugin-raspberrypi
+* slf4j-api
+* slf4j-simple
+* run.sh --> this is the actual start file which will run pi4j-example-minimal
 
 Make the run script executable and start it like this:
 

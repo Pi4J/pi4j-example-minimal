@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.pi4j'
+version = '0.0.1'
+
+description = """Pi4J :: MINIMAL EXAMPLE :: Sample minimal project"""
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+plugins.withType(JavaPlugin).configureEach {
+    java {
+        modularity.inferModulePath = true
+    }
+}
+
+// Copy the Java modules, run script and JAR in the distribution directory
+tasks.register("copyDistribution", Copy) {
+    from configurations.default
+    from tasks.named('jar')
+    from layout.projectDirectory.file('assets/run.sh')
+    into layout.buildDirectory.dir('distribution')
+}
+tasks.named("build") {
+    dependsOn("copyDistribution")
+}
+
+// Dependencies for this application, until V2 is released, snapshot is required here
+repositories {
+    mavenCentral()
+    maven {
+        name 'snapshots'
+        url 'https://oss.sonatype.org/content/groups/public'
+    }
+}
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha0'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha0'
+    implementation 'com.pi4j:pi4j-core:2.0-SNAPSHOT'
+    implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.0-SNAPSHOT'
+    implementation 'com.pi4j:pi4j-plugin-pigpio:2.0-SNAPSHOT'
+}
