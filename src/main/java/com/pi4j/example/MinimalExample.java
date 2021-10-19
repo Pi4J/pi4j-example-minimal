@@ -103,8 +103,8 @@ public class MinimalExample {
         PrintInfo.printProviders(console, pi4j);
 
         // Here we will create I/O interfaces for a (GPIO) digital output
-        // and input pin. Since no specific 'provider' is defined, Pi4J will
-        // use the default `DigitalOutputProvider` for the current default platform.
+        // and input pin. We define the 'provider' to use PiGpio to control
+        // the GPIO.
         var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
                 .id("led")
                 .name("LED Flasher")
