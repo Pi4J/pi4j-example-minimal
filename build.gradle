@@ -31,16 +31,12 @@ tasks.named("build") {
 // Dependencies for this application, until V2 is released, snapshot is required here
 repositories {
     mavenCentral()
-    maven {
-        name 'snapshots'
-        url 'https://oss.sonatype.org/content/groups/public'
-    }
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:2.0.0-alpha0'
-    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha0'
-    implementation 'com.pi4j:pi4j-core:2.0-SNAPSHOT'
-    implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.0-SNAPSHOT'
-    implementation 'com.pi4j:pi4j-plugin-pigpio:2.0-SNAPSHOT'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation 'com.pi4j:pi4j-core:2.0'
+    implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.0'
+    implementation 'com.pi4j:pi4j-plugin-pigpio:2.0'
 }
