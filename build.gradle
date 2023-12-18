@@ -28,7 +28,7 @@ tasks.named("build") {
     dependsOn("copyDistribution")
 }
 
-// Dependencies for this application, until V2 is released, snapshot is required here
+// Dependencies for this application
 repositories {
     mavenCentral()
 }
