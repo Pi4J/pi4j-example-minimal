@@ -28,10 +28,7 @@ package com.pi4j.example;
  */
 
 import com.pi4j.Pi4J;
-import com.pi4j.io.gpio.digital.DigitalInput;
-import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalState;
-import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.util.Console;
 
 /**
@@ -105,23 +102,9 @@ public class MinimalExample {
         // Here we will create I/O interfaces for a (GPIO) digital output
         // and input pin. We define the 'provider' to use PiGpio to control
         // the GPIO.
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("led")
-                .name("LED Flasher")
-                .address(PIN_LED)
-                .shutdown(DigitalState.LOW)
-                .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
-        var led = pi4j.create(ledConfig);
+        var led = pi4j.digitalOutput().create(PIN_LED, "myLed");
 
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("Press button")
-                .address(PIN_BUTTON)
-                .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
-                .provider("pigpio-digital-input");
-        var button = pi4j.create(buttonConfig);
+        var button = pi4j.digitalInput().create(PIN_BUTTON, "myButton");
         button.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
                 pressCount++;
