@@ -21,28 +21,13 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- DEPENDENCIES VERSIONS -->
-        <slf4j.version>1.7.32</slf4j.version>
-        <pi4j.version>2.5.0</pi4j.version>
+        <slf4j.version>2.0.12</slf4j.version>
+        <pi4j.version>2.5.1</pi4j.version>
 
         <!-- BUILD PLUGIN VERSIONS -->
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
-
-    <!-- DEPENDENCY REPOSITORIES -->
-    <repositories>
-        <repository>
-            <id>oss-snapshots-repo</id>
-            <name>Sonatype OSS Maven Repository</name>
-            <url>https://oss.sonatype.org/content/groups/public</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
