@@ -29,7 +29,6 @@ package com.pi4j.example;
 
 import com.pi4j.Pi4J;
 import com.pi4j.io.gpio.digital.DigitalInput;
-import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.util.Console;
@@ -102,25 +101,16 @@ public class MinimalExample {
         PrintInfo.printDefaultPlatform(console, pi4j);
         PrintInfo.printProviders(console, pi4j);
 
-        // Here we will create I/O interfaces for a (GPIO) digital output
-        // and input pin. We define the 'provider' to use PiGpio to control
-        // the GPIO.
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("led")
-                .name("LED Flasher")
-                .address(PIN_LED)
-                .shutdown(DigitalState.LOW)
-                .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
-        var led = pi4j.create(ledConfig);
+        // Here we will create the I/O interface for a LED with minimal code.
+        var led = pi4j.digitalOutput().create(PIN_LED);
 
+        // The button needs a bit more configuration, so we use a config builder.
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("Press button")
                 .address(PIN_BUTTON)
                 .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
-                .provider("pigpio-digital-input");
+                .debounce(3000L);
         var button = pi4j.create(buttonConfig);
         button.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
