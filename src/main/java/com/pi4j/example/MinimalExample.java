@@ -123,7 +123,7 @@ public class MinimalExample {
         PrintInfo.printRegistry(console, pi4j);
 
         while (pressCount < 5) {
-            if (led.equals(DigitalState.HIGH)) {
+            if (led.state() == DigitalState.HIGH) {
                 console.println("LED low");
                 led.low();
             } else {
