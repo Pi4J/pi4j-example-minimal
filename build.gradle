@@ -36,7 +36,7 @@ repositories {
 dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.12'
     implementation 'org.slf4j:slf4j-simple:2.0.12'
-    implementation 'com.pi4j:pi4j-core:2.5.1'
-    implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.5.1'
-    implementation 'com.pi4j:pi4j-plugin-gpiod:2.5.1'
+    implementation 'com.pi4j:pi4j-core:2.6.0'
+    implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.6.0'
+    implementation 'com.pi4j:pi4j-plugin-gpiod:2.6.0'
 }
