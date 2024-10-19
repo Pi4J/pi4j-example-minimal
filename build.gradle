@@ -19,7 +19,7 @@ plugins.withType(JavaPlugin).configureEach {
 
 // Copy the Java modules, run script and JAR in the distribution directory
 tasks.register("copyDistribution", Copy) {
-    from configurations.default
+    from configurations.runtimeClasspath
     from tasks.named('jar')
     from layout.projectDirectory.file('assets/run.sh')
     into layout.buildDirectory.dir('distribution')
