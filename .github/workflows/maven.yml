@@ -16,11 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        distribution: 'temurin'
-        java-version: 17
+        distribution: 'zulu'
+        java-version: 25
 
     - name: Grant execute permission for mvnw
       run: chmod +x mvnw
