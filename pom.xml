@@ -16,13 +16,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- JAVA COMPILER VERSIONS -->
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- DEPENDENCIES VERSIONS -->
         <slf4j.version>2.0.16</slf4j.version>
-        <pi4j.version>3.0.2</pi4j.version>
+        <pi4j.version>4.0.0</pi4j.version>
 
         <!-- BUILD PLUGIN VERSIONS -->
         <exec-maven-plugin.version>3.4.1</exec-maven-plugin.version>
@@ -48,15 +48,10 @@
             <version>${pi4j.version}</version>
         </dependency>
 
-        <!-- include Pi4J Plugins (Platforms and I/O Providers) -->
+        <!-- include Pi4J Plugin (Platforms and I/O Providers) -->
         <dependency>
             <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-plugin-raspberrypi</artifactId>
-            <version>${pi4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-plugin-gpiod</artifactId>
+            <artifactId>pi4j-plugin-ffm</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
     </dependencies>
