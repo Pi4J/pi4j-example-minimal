@@ -1,13 +1,13 @@
 
- Pi4J V2 :: Java I/O Library for Raspberry Pi :: Minimal example application
+ Pi4J :: Java I/O Library for Raspberry Pi :: Minimal example application
 ==========================================================================
 
 GitHub Actions: 
 ![Maven build](https://github.com/pi4j/pi4j-example-minimal/workflows/Maven/badge.svg)
 ![Gradle build](https://github.com/pi4j/pi4j-example-minimal/workflows/Gradle/badge.svg)
 
-This project contains a minimal example application which uses the Pi4J (V2) library and uses a digital output (LED) 
-and digital input (push button). Full description is available on [the Pi4J website](https://pi4j.com/getting-started/minimal-example-application)
+This project contains a minimal example application which uses the Pi4J library and uses a digital output (LED) 
+and digital input (push button). The full description is available on [the Pi4J website](https://pi4j.com/getting-started/minimal-example-application)
 
 ## PROJECT OVERVIEW
 
